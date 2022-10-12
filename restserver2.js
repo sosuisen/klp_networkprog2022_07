@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 
-const hostname = 'localhost';
+const host = 'localhost';
 const port = 8080;
 const apiEndPoint = '/api/';
 const documentRoot = './static';
@@ -124,6 +124,8 @@ const server = http.createServer((req, res) => {
     res.end();
 });
 
-server.listen(port, hostname, () => {
-    console.log(`Starting HTTP server at http://${hostname}:${port}/`)
-});
+server.listen({ host, port } , () => {
+    console.log(`Starting HTTP server at http://${host}:${port}/`)
+  });
+  
+  

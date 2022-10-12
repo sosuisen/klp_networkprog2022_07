@@ -1,6 +1,6 @@
 const http = require('http');
 
-const hostname = 'localhost';
+const host = 'localhost';
 const port = 8080;
 const apiEndPoint = '/api/';
 
@@ -32,7 +32,7 @@ if (process.argv.length >= 5) {
 
 const req = http.request(
     {
-        hostname,
+        host,
         port,
         path: apiEndPoint + resource,
         method,
