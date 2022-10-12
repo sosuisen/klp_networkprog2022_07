@@ -3,31 +3,46 @@ const fs = require('fs');
 
 const hostname = 'localhost';
 const port = 8080;
-const documentRoot = './static';
 const apiEndPoint = '/api/';
+const documentRoot = './static';
 
 const todos = [
   { id: 1, title: 'ネーム', completed: false },
   { id: 2, title: '下書き', completed: true },
 ];
 
-const restAPI = (req, res) => {
+const restAPI = (req, res, resource) => {
   const contentType = 'application/json; charset=utf-8';
+
   if (req.method === 'GET') {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', contentType);    
-    res.end(JSON.stringify(todos));
+    if (resource === '/todos') {
+      res.statusCode = 200;
+      res.setHeader('Content-Type', contentType);
+      res.end(JSON.stringify(todos));
+      return;
+    }
+    else {
+      const re = /^\/todos\/(.*)/;
+      const found = resource.match(re);
+      console.log(found);
+      if(found) {
+        const id = parseInt(found[1]);
+        const todo = todos.find(todo => todo.id === id);
+        res.statusCode = 200;
+        res.setHeader('Content-Type', contentType);
+        res.end(JSON.stringify(todo));
+        return;
+      }
+    }
+    res.statusCode = 404;
+    res.end();
+    return;
   }
-  else if (req.method === 'POST') {
-    
-  }
-  else if (req.method === 'PUT') {
-    
-  }
-  else if (req.method === 'DELETE') {
-    
-  }
-  return;
+
+  // https://developer.mozilla.org/ja/docs/Web/HTTP/Status/405
+  res.statusCode = 405;
+  res.setHeader('Allow', 'GET');
+  res.end();
 };
 
 const staticFile = (req, res) => {
@@ -48,10 +63,15 @@ const staticFile = (req, res) => {
   }
 
   fs.readFile(`${documentRoot}${url}`, encoding, (err, data) => {
-    res.statusCode = 200;
     res.setHeader('Content-Type', contentType);
-    if (err) res.end(notFound);
-    else res.end(data);
+    if (err) {
+      res.statusCode = 404;
+      res.end(notFound);
+    }
+    else {
+      res.statusCode = 200;
+      res.end(data);
+    }
   });
 };
 
@@ -59,21 +79,20 @@ const server = http.createServer((req, res) => {
   console.log(req.method);
   console.log(req.url);
 
-  let html = '';
-
-  if (req.url.startsWith(apiEndPoint)) 
-  {
-      restAPI(req, res);
+  if (req.url.startsWith(apiEndPoint)) {
+    const resource = req.url.replace(apiEndPoint, '/');
+    restAPI(req, res, resource);
+    return;
   }
   else if (req.method === 'GET') {
     staticFile(req, res);
+    return;
   }
-  else {
-    // https://developer.mozilla.org/ja/docs/Web/HTTP/Status/405
-    res.statusCode = 405;
-    res.setHeader('Allow', 'GET');
-    res.end();
-  }
+
+  // https://developer.mozilla.org/ja/docs/Web/HTTP/Status/405
+  res.statusCode = 405;
+  res.setHeader('Allow', 'GET');
+  res.end();
 });
 
 server.listen(port, hostname, () => {
