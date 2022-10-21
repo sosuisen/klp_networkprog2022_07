@@ -22,7 +22,7 @@ const restAPI = (req, res, resource) => {
             return;
           }
           else {
-            const re = /^\/todos\/(.*)/;
+            const re = /^\/todos\/(.+)$/;
             const found = resource.match(re);
             if(found) {
               const id = parseInt(found[1]);

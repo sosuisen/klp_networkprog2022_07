@@ -22,7 +22,7 @@ const restAPI = (req, res, resource) => {
             return;
         }
         else {
-            const re = /^\/todos\/(.*)/;
+            const re = /^\/todos\/(.+)$/;
             const found = resource.match(re);
             if (found) {
                 const id = parseInt(found[1]);
@@ -68,7 +68,7 @@ const restAPI = (req, res, resource) => {
         return;
     }
     else if (req.method === 'PUT') {
-        const re = /^\/todos\/(.*)/;
+        const re = /^\/todos\/(.+)$/;
         const found = resource.match(re);
         if (found) {
 
@@ -103,7 +103,7 @@ const restAPI = (req, res, resource) => {
         return;
     }
     else if (req.method === 'DELETE') {
-        const re = /^\/todos\/(.*)/;
+        const re = /^\/todos\/(.*)$/;
         const found = resource.match(re);
         if (found) {
 

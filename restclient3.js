@@ -20,6 +20,7 @@ let userData = '';
 // node restclient3.js POST todos {\"title\":\"仕上げ\"}
 // node restclient3.js PUT todos/2
 // node restclient3.js PUT todos/2 {\"completed\":true}
+// node restclient3.js DELETE todos/2
 if (process.argv.length >= 3) {
     method = process.argv[2];
 }

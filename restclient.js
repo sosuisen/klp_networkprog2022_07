@@ -4,6 +4,9 @@ const host = 'localhost';
 const port = 8080;
 const apiEndPoint = '/api/';
 
+// 実行例）
+// node restclient.js GET todos
+// node restclient.js GET todos/1
 let method = 'GET';
 let resource = '';
 if (process.argv.length >= 3) {

@@ -22,7 +22,7 @@ const restAPI = (req, res, resource) => {
       return;
     }
     else {
-      const re = /^\/todos\/(.*)/;
+      const re = /^\/todos\/(.+)$/;
       const found = resource.match(re);
       console.log(found);
       if(found) {
