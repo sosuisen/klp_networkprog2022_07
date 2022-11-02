@@ -58,7 +58,7 @@ const restAPI = (req, res, resource) => {
                 todos.push(newTodo);
                 console.log(`Added new todo: ${JSON.stringify(newTodo)}`);
 
-                res.statusCode = 200;
+                res.statusCode = 201; // 201 Created
                 res.setHeader('Content-Type', contentType);
                 res.end(JSON.stringify(newTodo));
             });

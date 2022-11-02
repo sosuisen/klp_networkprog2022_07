@@ -35,7 +35,7 @@ const req = http.request(
     res => {
         let responseData = '';
         console.log(`statusCode: ${res.statusCode}`);
-        if (res.statusCode === 200) {
+        if (res.statusCode.toString().match(/20\d/)) {
             res.on('data', chunk => responseData += chunk);
             res.on('end', () => {
                 const obj = JSON.parse(responseData)
