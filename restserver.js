@@ -28,10 +28,12 @@ const restAPI = (req, res, resource) => {
       if(found) {
         const id = parseInt(found[1]);
         const todo = todos.find(todo => todo.id === id);
-        res.statusCode = 200;
-        res.setHeader('Content-Type', contentType);
-        res.end(JSON.stringify(todo));
-        return;
+        if (todo) {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', contentType);
+          res.end(JSON.stringify(todo));
+          return;
+        }
       }
     }
     res.statusCode = 404;
