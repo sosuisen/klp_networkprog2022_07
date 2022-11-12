@@ -47,7 +47,7 @@ const restAPI = (req, res, resource) => {
 
 const staticFile = (req, res) => {
   let url = req.url;
-  if (url === '/') url = '/index.html';
+  url = url.replace(/\/$/, '/index.html');
 
   const notFound = `<h1>404 Not Found</h1>${url}はありません。`;
 
