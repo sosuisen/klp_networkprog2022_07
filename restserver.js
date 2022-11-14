@@ -7,8 +7,8 @@ const apiEndPoint = '/api/';
 const documentRoot = './static';
 
 const todos = [
-  { id: 1, title: 'ネーム', completed: false },
-  { id: 2, title: '下書き', completed: true },
+  { id: 1, title: 'ネーム', completed: true },
+  { id: 2, title: '下書き', completed: false },
 ];
 
 const restAPI = (req, res, resource) => {
@@ -28,10 +28,12 @@ const restAPI = (req, res, resource) => {
       if(found) {
         const id = parseInt(found[1]);
         const todo = todos.find(todo => todo.id === id);
-        res.statusCode = 200;
-        res.setHeader('Content-Type', contentType);
-        res.end(JSON.stringify(todo));
-        return;
+        if (todo) {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', contentType);
+          res.end(JSON.stringify(todo));
+          return;
+        }
       }
     }
     res.statusCode = 404;
