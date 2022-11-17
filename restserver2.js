@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const host = 'localhost';
 const port = 8080;
-const apiEndPoint = '/api/';
+const rootEndPoint = '/api';
 const documentRoot = './static';
 
 const todos = [
@@ -110,8 +110,8 @@ const server = http.createServer((req, res) => {
     console.log(req.method);
     console.log(req.url);
 
-    if (req.url.startsWith(apiEndPoint)) {
-        const resource = req.url.replace(apiEndPoint, '/');
+    if (req.url.startsWith(rootEndPoint)) {
+        const resource = req.url.replace(rootEndPoint, '');
         restAPI(req, res, resource);
         return;
     }

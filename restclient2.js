@@ -2,7 +2,7 @@ const http = require('http');
 
 const host = 'localhost';
 const port = 8080;
-const apiEndPoint = '/api/';
+const rootEndPoint = '/api';
 
 let method = 'GET';
 let resource = '';
@@ -15,6 +15,8 @@ let userData = '';
 // 実行例）
 // node restclient2.js POST todos
 // node restclient2.js POST todos {\"title\":\"仕上げ\"}
+// プログラムの都合上、対象リソースの先頭の / は省略してください。
+// 例） /todos は todos と書く
 if (process.argv.length >= 3) {
     method = process.argv[2];
 }
@@ -29,7 +31,7 @@ const req = http.request(
     {
         host,
         port,
-        path: apiEndPoint + resource,
+        path: rootEndPoint + '/' + resource,
         method,
     },
     res => {
