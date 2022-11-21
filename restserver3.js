@@ -83,9 +83,11 @@ const restAPI = (req, res, resource) => {
                     console.log(`Data: ${data}`);
                     const obj = JSON.parse(data)
 
-                    Object.keys(obj).forEach(key => {
-                        todo[key] = obj[key];
-                    });
+                    // 今回はこれでOK。元のオブジェクトに同じプロパティ名がある場合は上書きされます。
+                    Object.assign(todo, obj);
+                    // 別解
+                    // Object.keys(obj).forEach(key => todo[key] = obj[key]);
+
                     console.log(`Updated todo: ${JSON.stringify(todo)}`);
 
                     res.statusCode = 200;
